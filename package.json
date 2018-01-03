@@ -4,6 +4,12 @@
   "description": "Nuxt.js project",
   "author": "Long nguyễn <oi.connect.international@gmail.com>",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": "3000"
+    }
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -13,9 +19,8 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@nuxtjs/sitemap": "0.0.3",
     "axios": "^0.17.1",
-    "fs": "0.0.1-security",
-    "jquery": "^3.2.1",
     "nuxt": "^1.0.0-rc11"
   },
   "devDependencies": {

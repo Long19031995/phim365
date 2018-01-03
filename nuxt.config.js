@@ -1,5 +1,81 @@
 const webpack = require('webpack')
 
+var listRoute = [
+  '/trang-chu',
+  '/phim-moi',
+  '/phim-le',
+  '/phim-bo',
+
+  '/phim-moi/ten-phim/page-1',
+  '/phim-le/ten-phim/page-1',
+  '/phim-bo/ten-phim/page-1',
+  '/phim-hanh-dong/ten-phim/page-1',
+  '/phim-hoat-hinh/ten-phim/page-1',
+  '/phim-kinh-di/ten-phim/page-1',
+  '/phim-vo-thuat/ten-phim/page-1',
+  '/phim-chien-tranh/ten-phim/page-1',
+  '/phim-hai-huoc/ten-phim/page-1',
+  '/phim-vien-tuong/ten-phim/page-1',
+  '/phim-phieu-luu/ten-phim/page-1',
+  '/phim-than-bi/ten-phim/page-1',
+  '/phim-co-trang/ten-phim/page-1',
+  '/phim-khoa-hoc/ten-phim/page-1',
+  '/phim-tinh-cam/ten-phim/page-1',
+  '/phim-the-thao/ten-phim/page-1',
+  '/phim-ca-nhac/ten-phim/page-1',
+  '/phim-gia-dinh/ten-phim/page-1',
+  '/phim-tai-lieu/ten-phim/page-1',
+  '/phim-tv-show/ten-phim/page-1',
+  '/phim-lich-su/ten-phim/page-1',
+  '/phim-tam-ly/ten-phim/page-1',
+
+  '/phim-moi/dao-dien/page-1',
+  '/phim-le/dao-dien/page-1',
+  '/phim-bo/dao-dien/page-1',
+  '/phim-hanh-dong/dao-dien/page-1',
+  '/phim-hoat-hinh/dao-dien/page-1',
+  '/phim-kinh-di/dao-dien/page-1',
+  '/phim-vo-thuat/dao-dien/page-1',
+  '/phim-chien-tranh/dao-dien/page-1',
+  '/phim-hai-huoc/dao-dien/page-1',
+  '/phim-vien-tuong/dao-dien/page-1',
+  '/phim-phieu-luu/dao-dien/page-1',
+  '/phim-than-bi/dao-dien/page-1',
+  '/phim-co-trang/dao-dien/page-1',
+  '/phim-khoa-hoc/dao-dien/page-1',
+  '/phim-tinh-cam/dao-dien/page-1',
+  '/phim-the-thao/dao-dien/page-1',
+  '/phim-ca-nhac/dao-dien/page-1',
+  '/phim-gia-dinh/dao-dien/page-1',
+  '/phim-tai-lieu/dao-dien/page-1',
+  '/phim-tv-show/dao-dien/page-1',
+  '/phim-lich-su/dao-dien/page-1',
+  '/phim-tam-ly/dao-dien/page-1',
+
+  '/phim-moi/dien-vien/page-1',
+  '/phim-le/dien-vien/page-1',
+  '/phim-bo/dien-vien/page-1',
+  '/phim-hanh-dong/dien-vien/page-1',
+  '/phim-hoat-hinh/dien-vien/page-1',
+  '/phim-kinh-di/dien-vien/page-1',
+  '/phim-vo-thuat/dien-vien/page-1',
+  '/phim-chien-tranh/dien-vien/page-1',
+  '/phim-hai-huoc/dien-vien/page-1',
+  '/phim-vien-tuong/dien-vien/page-1',
+  '/phim-phieu-luu/dien-vien/page-1',
+  '/phim-than-bi/dien-vien/page-1',
+  '/phim-co-trang/dien-vien/page-1',
+  '/phim-khoa-hoc/dien-vien/page-1',
+  '/phim-tinh-cam/dien-vien/page-1',
+  '/phim-the-thao/dien-vien/page-1',
+  '/phim-ca-nhac/dien-vien/page-1',
+  '/phim-gia-dinh/dien-vien/page-1',
+  '/phim-tai-lieu/dien-vien/page-1',
+  '/phim-tv-show/dien-vien/page-1',
+  '/phim-lich-su/dien-vien/page-1',
+  '/phim-tam-ly/dien-vien/page-1'
+]
+
 module.exports = {
   head: {
     meta: [
@@ -23,5 +99,20 @@ module.exports = {
       { src: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' }
     ]
   },
-  loading: { color: '#3B8070' }
+  loading: { color: '#3B8070' },
+  modules: [
+    '@nuxtjs/sitemap'
+  ],
+  sitemap: {
+    routes () {
+      return listRoute.map(function (route) {
+        return {
+          url: route,
+          changefreq: 'daily',
+          priority: 1,
+          lastmodISO: new Date()
+        }
+      })
+    }
+  }
 }
