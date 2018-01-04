@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default {
-	baseUrl: 'http://api-phim-oitest.193b.starter-ca-central-1.openshiftapps.com',
+	baseUrl: 'http://api.phim365.net',
 	getData: async function (name, query) {
 		let url = this.baseUrl + '/' + name + '?'
 		if (query !== undefined) {

@@ -99,20 +99,20 @@ module.exports = {
       { src: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' }
     ]
   },
-  loading: { color: '#3B8070' },
-  modules: [
-    '@nuxtjs/sitemap'
-  ],
-  sitemap: {
-    routes () {
-      return listRoute.map(function (route) {
-        return {
-          url: route,
-          changefreq: 'daily',
-          priority: 1,
-          lastmodISO: new Date()
-        }
-      })
-    }
-  }
+  loading: { color: '#3B8070' }
+  // modules: [
+  //   '@nuxtjs/sitemap'
+  // ],
+  // sitemap: {
+  //   routes () {
+  //     return listRoute.map(function (route) {
+  //       return {
+  //         url: route,
+  //         changefreq: 'daily',
+  //         priority: 1,
+  //         lastmodISO: new Date()
+  //       }
+  //     })
+  //   }
+  // }
 }
