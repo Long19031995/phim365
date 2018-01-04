@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default {
-	baseUrl: 'http://api.phim365.net',
+	baseUrl: 'https://api.phim365.net',
 	getData: async function (name, query) {
 		let url = this.baseUrl + '/' + name + '?'
 		if (query !== undefined) {
