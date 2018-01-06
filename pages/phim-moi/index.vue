@@ -1,16 +1,8 @@
 <template>
-	<div id="film-series">
+	<div id="film-new">
 		<div class="link-redirect">
-			<a href="/trang-chu">
+			<a href="/">
 				Trang chủ
-			</a>
-			|
-			<a href="/phim-moi">
-				Phim mới
-			</a>
-			|
-			<a href="/phim-le">
-				Phim lẻ
 			</a>
 			|
 			<a href="/phim-moi/ten-phim/page-1">
@@ -18,35 +10,69 @@
 			</a>
 		</div>
 		<div class="content">
-			<div class="list-series">
-				<h1 class="text-primary text-center">Phim bộ</h1>
-				<div v-for="film in listSeries" class="series">
-					<div class="alert alert-info" role="alert">
-					  	<span class="title">
-					  		<a :href="'/chi-tiet/' + film.slug" class="text-info">
-					  			{{ film.title }}
-					  		</a>
-					  	</span>
-					  	<br>
-					  	<span class="time-ago text-primary">
-					  		{{ film.time_crawl | getTimeAgo }}
-					  	</span>
-					  	-
-					  	<span>
-					  		{{ film.length }}	
-					  	</span>
-					  	-
-					  	<span class="source text-danger">
-					  		{{ film.source }}
-					  	</span>
-					</div>
+			<div class="list-movie">
+				<h1 class="text-primary text-center">Phim lẻ</h1>
+				<div v-for="film in listMovie" class="alert alert-success" role="alert">
+				  	<span class="title">
+				  		<a :href="'/chi-tiet/' + film.slug" class="text-success">
+				  			{{ film.title }}
+				  		</a>
+				  	</span>
+				  	<br>
+				  	<span class="time-ago text-primary">
+				  		{{ film.time_crawl | getTimeAgo }}
+				  	</span>
+				  	-
+				  	<span>
+				  		{{ film.length }}	
+				  	</span>
+				  	-
+				  	<span class="source text-danger">
+				  		{{ film.source }}
+				  	</span>
 				</div>
-				<div class="load-more">
-					<div @click="getMore()" class="btn btn-info">
+				<a href="/phim-le">
+					<div class="button btn btn-success">
 						Xem thêm
 					</div>
-				</div>
+				</a>
 			</div>
+			<div class="list-series">
+				<h1 class="text-primary text-center">Phim bộ</h1>
+				<div v-for="film in listSeries" class="alert alert-info" role="alert">
+				  	<span class="title">
+				  		<a :href="'/chi-tiet/' + film.slug" class="text-info">
+				  			{{ film.title }}
+				  		</a>
+				  	</span>
+				  	<br>
+				  	<span class="time-ago text-primary">
+				  		{{ film.time_crawl | getTimeAgo }}
+				  	</span>
+				  	-
+				  	<span>
+				  		{{ film.length }}	
+				  	</span>
+				  	-
+				  	<span class="source text-danger">
+				  		{{ film.source }}
+				  	</span>
+				</div>
+				<a href="/phim-bo">
+					<div class="button btn btn-info">
+						Xem thêm
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="list-tag">
+			<ul>
+				<li :class="getStyleTag()" v-for="tag in listTag">
+					<a :href="'/phim-moi/ten-phim/page-1?keySearch=' + tag.replace(/\s+/g, '-')">
+						{{ tag }}
+					</a>
+				</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -55,22 +81,48 @@
 	import store from '~/static/other/js/store.js'
 	export default {
 		async asyncData () {
-			let listSeries = await store.getData('listFilmLatest', {
-				id: 2,
-				offset: 0,
-				size: 10
+			let listMovie = await store.getData('listFilmLatest', {
+				id: 1
 			})
 
+			let listSeries = await store.getData('listFilmLatest', {
+				id: 2
+			})
+
+			let listTag = []
+			var i = 0
+			if (listMovie && listSeries) {
+				listMovie.forEach(function (movie) {
+					let arrayTag = movie.tags.split(',')
+					arrayTag.forEach(function (tag) {
+						if (i >= 10 || tag.length > 30 || tag.length < 5) {
+							return
+						}
+						listTag.push(tag.replace(/;/g, ' ').replace(/\s+/g, ' ').trim())
+						i++
+					})
+				})
+				listSeries.forEach(function (series) {
+					let arrayTag = series.tags.split(',')
+					arrayTag.forEach(function (tag) {
+						if (i >= 10 || tag.length > 30 || tag.length < 5) {
+							return
+						}
+						listTag.push(tag.replace(/;/g, ' ').replace(/\s+/g, ' ').trim())
+						i++
+					})
+				})
+			}
+
 			return {
+				listMovie: listMovie,
 				listSeries: listSeries,
-				id: 2,
-				offset: 0,
-				size: 10
+				listTag: listTag
 			}
 		},
 		head () {
 			return {
-				title: 'Phim bộ',
+				title: 'Phim mới',
 				meta: [
 					{ 
 						name: 'description',
@@ -82,12 +134,22 @@
 					},
 					{
 						property: 'og:title',
-						content: 'Phim bộ'
+						content: 'Phim mới'
 					},
 					{
 						property: 'og:description',
 						content: 'Phim 365 là Website giúp bạn xem phim mới nhất, hay nhất, chất lượng cao HD, Việt Sub, thuyết mình, lồng tiếng, cập nhật nhanh nhất từ tất cả các nguồn. Thể loại đa dạng: Phim lẻ, Phim bộ, Phim hoạt hình, Phim hành động, Phim tâm lý, Phim chiến tranh, Phim võ thuật, Phim hài, Phim viễn tưởng, Phim kinh dị, Phim cổ trang, Phim tình cảm, Phim tài liệu...'
 					}
+				]
+			}
+		},
+		data () {
+			return {
+				listStyle: [
+					'alert alert-info',
+					'alert alert-success',
+					'alert alert-warning',
+					'alert alert-danger'
 				]
 			}
 		},
@@ -132,25 +194,19 @@
 			}
 		},
 		methods: {
-			async getMore () {
-				var self = this
+			getStyleTag () {
+				let min = 0
+				let max = this.listStyle.length - 1
+				let random = Math.floor(Math.random() * (max - min + 1)) + min
 
-				let listSeries = await store.getData('listFilmLatest', {
-					id: self.id,
-					offset: self.offset + 1,
-					size: self.size
-				})
-
-				listSeries.forEach(function (series) {
-					self.listSeries.push(series)
-				})
+				return this.listStyle[random]
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	#film-series {
+	#film-new {
 		margin: 0px;
 		padding: 0px;
 		width: 100%;
@@ -166,22 +222,20 @@
 		vertical-align: middle;
 		z-index: 3000;
 	}
-	.list-series {
-		width: 100%;
+	.list-movie {
+		width: 50%;
 		padding: 0px 20px;
 		overflow-x: hidden;
 		overflow-y: auto;
 		float: left;
 	}
-	.series {
+	.list-series {
 		width: 50%;
-		padding: 10px 20px;
+		padding: 0px 20px;
+		overflow-x: hidden;
+		overflow-y: auto;
 		float: left;
-		box-sizing: border-box;
-	}
-	.load-more {
-		text-align: center;
-		margin-bottom: 20px;
+		margin-bottom: 40px;
 	}
 	.content {
 		padding-top: 40px;
@@ -194,16 +248,26 @@
 	.time-ago, .source {
 		font-size: 13px;
 	}
+	.list-tag {
+		clear: both;
+		width: 100%;
+	}
+	.list-tag ul {
+		list-style: none;
+		margin-bottom: 40px;
+	}
+	.list-tag ul li {
+		float: left;
+		margin: 5px;
+		border-radius: 10px !important;
+		padding: 5px 10px !important;
+	}
 	@media(max-width: 575px) {
-		.list-series {
+		.list-movie {
 			width: 100%;
 		}
 		.list-series {
 			width: 100%;
-		}
-		.series {
-			width: 100%;
-			padding: 10px 0px;
 		}
 	}
 </style>

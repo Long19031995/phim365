@@ -1,7 +1,7 @@
 <template>
-	<div id="film-movie">
+	<div id="film-series">
 		<div class="link-redirect">
-			<a href="/trang-chu">
+			<a href="/">
 				Trang chủ
 			</a>
 			|
@@ -9,8 +9,8 @@
 				Phim mới
 			</a>
 			|
-			<a href="/phim-bo">
-				Phim bộ
+			<a href="/phim-le">
+				Phim lẻ
 			</a>
 			|
 			<a href="/phim-moi/ten-phim/page-1">
@@ -18,12 +18,12 @@
 			</a>
 		</div>
 		<div class="content">
-			<div class="list-movie">
-				<h1 class="text-primary text-center">Phim lẻ</h1>
-				<div v-for="film in listMovie" class="movie">
-					<div class="alert alert-success" role="alert">
+			<div class="list-series">
+				<h1 class="text-primary text-center">Phim bộ</h1>
+				<div v-for="film in listSeries" class="series">
+					<div class="alert alert-info" role="alert">
 					  	<span class="title">
-					  		<a :href="'/chi-tiet/' + film.slug" class="text-success">
+					  		<a :href="'/chi-tiet/' + film.slug" class="text-info">
 					  			{{ film.title }}
 					  		</a>
 					  	</span>
@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<div class="load-more">
-					<div @click="getMore()" class="btn btn-success">
+					<div @click="getMore()" class="btn btn-info">
 						Xem thêm
 					</div>
 				</div>
@@ -55,22 +55,22 @@
 	import store from '~/static/other/js/store.js'
 	export default {
 		async asyncData () {
-			let listMovie = await store.getData('listFilmLatest', {
-				id: 1,
+			let listSeries = await store.getData('listFilmLatest', {
+				id: 2,
 				offset: 0,
 				size: 10
 			})
 
 			return {
-				listMovie: listMovie,
-				id: 1,
+				listSeries: listSeries,
+				id: 2,
 				offset: 0,
 				size: 10
 			}
 		},
 		head () {
 			return {
-				title: 'Phim lẻ',
+				title: 'Phim bộ',
 				meta: [
 					{ 
 						name: 'description',
@@ -82,7 +82,7 @@
 					},
 					{
 						property: 'og:title',
-						content: 'Phim lẻ'
+						content: 'Phim bộ'
 					},
 					{
 						property: 'og:description',
@@ -135,14 +135,14 @@
 			async getMore () {
 				var self = this
 
-				let listMovie = await store.getData('listFilmLatest', {
+				let listSeries = await store.getData('listFilmLatest', {
 					id: self.id,
 					offset: self.offset + 1,
 					size: self.size
 				})
 
-				listMovie.forEach(function (movie) {
-					self.listMovie.push(movie)
+				listSeries.forEach(function (series) {
+					self.listSeries.push(series)
 				})
 			}
 		}
@@ -150,7 +150,7 @@
 </script>
 
 <style scoped>
-	#film-movie {
+	#film-series {
 		margin: 0px;
 		padding: 0px;
 		width: 100%;
@@ -166,14 +166,14 @@
 		vertical-align: middle;
 		z-index: 3000;
 	}
-	.list-movie {
+	.list-series {
 		width: 100%;
 		padding: 0px 20px;
 		overflow-x: hidden;
 		overflow-y: auto;
 		float: left;
 	}
-	.movie {
+	.series {
 		width: 50%;
 		padding: 10px 20px;
 		float: left;
@@ -195,13 +195,13 @@
 		font-size: 13px;
 	}
 	@media(max-width: 575px) {
-		.list-movie {
+		.list-series {
 			width: 100%;
 		}
 		.list-series {
 			width: 100%;
 		}
-		.movie {
+		.series {
 			width: 100%;
 			padding: 10px 0px;
 		}

@@ -1,6 +1,6 @@
 <template>
 	<nav class="nav-bar">
-		<a href="/trang-chu">
+		<a href="/">
 			<button class="btn-back btn btn-danger">
 				<i class="fa fa-home"></i>
 			</button>

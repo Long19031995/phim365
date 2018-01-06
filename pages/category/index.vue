@@ -50,11 +50,11 @@
 			<h3 v-if="keySearch !== undefined" class="title-search-result text-info">
 				Kết quả tìm kiếm cho: {{ keySearch.replace(/\-/g, ' ') }}
 			</h3>
-			<a v-if="$route.params.page !== 'page-1'" :href="urlPrev">
+			<!-- <a v-if="$route.params.page !== 'page-1'" :href="urlPrev">
 				<button class="btn-prev btn btn-info">
 					<i class="fa fa-chevron-left"></i>
 				</button>
-			</a>
+			</a> -->
 			<a v-if="listFilm.length === 20" :href="urlNext">
 				<button class="btn-next btn btn-info">
 					<i class="fa fa-chevron-right"></i>
@@ -140,17 +140,17 @@
 			]
 
 			let listFilm = await store.getData('searchFilm', {
-				id: store.getValue(context.params.category, listCategory),
-				type: store.getValue(context.params.group),
-				offset: store.getValue(context.params.page),
+				id: 0,
+				type: 'title',
+				offset: 0,
 				size: 20,
-				text: store.getValue(context.query.keySearch),
-				source: store.getValue(context.query.source),
-				year: store.getValue(context.query.year)
+				text: '',
+				source: '',
+				year: ''
 			})
 
-			let urlPrev = await store.getUrlSlide(context, 'prev')
-			let urlNext = await store.getUrlSlide(context, 'next')
+			let urlPrev = '/phim-moi/ten-phim/page-0'
+			let urlNext = '/phim-moi/ten-phim/page-2'
 
 			let seo = {}
 
@@ -170,24 +170,24 @@
 			return {
 				category: {
 					listCategory: listCategory,
-					cbxCategory: context.params.category
+					cbxCategory: 'phim-moi'
 				},
 				group: {
 					listGroup: listGroup,
-					cbxGroup: store.getValue(context.params.group)
+					cbxGroup: 'title'
 				},
 				source: {
 					listSource: listSource,
-					cbxSource: store.getValue(context.query.source)
+					cbxSource: ''
 				},
 				year: {
 					listYear: listYear,
-					cbxYear: store.getValue(context.query.year)
+					cbxYear: ''
 				},
 				listFilm: listFilm,
 				urlPrev: urlPrev,
 				urlNext: urlNext,
-				keySearch: context.query.keySearch,
+				keySearch: '',
 				seo: seo
 			}
 		},
