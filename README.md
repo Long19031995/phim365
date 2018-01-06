@@ -1,6 +1,6 @@
 # test_nuxt_template
 
-> Nuxt.js project
+phim365.net
 
 ## Build Setup
 
